@@ -20,15 +20,24 @@
           
         }
         .Sign{
-          width: 500px;
-          margin-left: 35%;
+          width: 700px;
+          margin-left: 25%;
           margin-top: 5%;
           margin-bottom: 5%;
-          padding: 5%;
+          padding: 2%;
           padding-bottom: 5%;
           border: 2px solid rgba(235, 235, 235, 0.705);
           box-sizing: border-box;
           background-color: rgba(235, 235, 235, 0.705);
+        }
+        #strengthbar{
+         text-align: center; 
+         color: white;
+         background-color:rgb(212, 29, 29);
+         font-size: medium;
+         width: 90%;
+         margin-top: 5%;
+         border-radius: 10px;    
         }
               
         footer{
@@ -42,11 +51,11 @@
     </style>
   </head>
 
-    <body background="images/Index/topstation.jfif"> 
+    <body background="images/Kerala Tourism/topstation.jfif"> 
       <!--Navbar starts here-->
       <nav class="navbar navbar-dark navbar-expand-sm sticky-top pt-4 pb-4" style=" background-color: rgba(9, 15,97, 0.822);" >
         <div class="container">
-            <img src="images/Index/kerala-tourism-title.png" alt="logo">
+            <img src="images/Kerala Tourism/kerala-tourism-title.png" alt="logo">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="index.html">Home</a>
                     <a class="nav-item nav-link" href="District.html">Explore</a>
@@ -62,47 +71,63 @@
 
         <!--Form starts here-->
         <div class="Sign"> 
-            <form action="">
+            <form action="index.html" onsubmit="return ">
               <fieldset class="form-group">
                   <legend style="text-align: center; font-family: sans-serif; font-size: 300%;">Sign Up</legend>
-                  <div>
-                      <label for="First Name"> First Name</label>
-                      <input class="form-control" type="text" placeholder="First name">
+                  <div class="row">
+                    <div class="col">
+                        <label for="First Name"> First Name</label>
+                        <input class="form-control" id="fname" type="text" placeholder="First name" required >
+                    </div>
+                
+                    <div class="col">
+                        <label for="Last Name"> Last Name</label>
+                        <input class="form-control" id="lname" type="text" placeholder="Last name" required>
+                    </div>
                   </div>
                   <br>
-                  <div>
-                      <label for="Last Name"> Last Name</label>
-                      <input class="form-control" type="text" placeholder="Last name">
+                  <div class="row">
+                    <div class="col">
+                        <label for="E-mail Address">E-mail address</label>
+                        <input class="form-control" id="email" type="text" placeholder="E-mail address" required>
+                        <label id="emailtext"></label>
+                    </div>
+                    
+                    <div class="col">
+                        <label for="Contact number">Contact number</label>
+                        <input class="form-control" id="contact" type="text" placeholder="Contact number" required>
+                        <label for="contacttext" id="contacttext"></label>
+                    </div>
                   </div>
-                  <br>
-                  <div>
-                      <label for="E-mail Address">E-mail address</label>
-                      <input class="form-control" type="text" placeholder="E-mail address">
-                  </div>
-                  <br>
-                  <div>
-                      <label for="Contact number">Contact number</label>
-                      <input class="form-control" type="text" placeholder="Contact number">
-                  </div>
-                  <br>
-                  <div>
+                 
+                  <div class="row">
+                    <div class="col">
+                        <label for="Gender">Gender</label>
+                        <select name="Gender" class="form-control" id="gender">
+                          <option value="Selection">Select</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="col">
                       <label for="Nationality">Nationality</label>
-                      <input class="form-control" type="text" placeholder="Nationality">
+                      <input class="form-control" id="nationality" type="text" placeholder="Nationality" required>
+                    </div>
                   </div>
-                  <br>
-                  <div>
-                      <label for="Gender">Gender</label>
-                      <select name="Gender" class="form-control" id="gender">
-                        <option value="Selection">Select</option>
-                      <option value="Female">Female</option>
-                      <option value="Male">Male</option>
-                      <option value="Other">Other</option>
-                    </select>
+                    <br>
+                  <div class="row">
+                    <div class="col">
+                        <label for="Password">Password</label>
+                        <input class="form-control" id="password" type="password" placeholder="Password" required>
+                        <label for="strength-bar" id="strengthbar"></label>
                     </div>
                     <br>
-                  <div>
-                      <label for="Password">Password</label>
-                      <input class="form-control" type="password" placeholder="Password">
+                    <div class="col">
+                      <label for="Confirm Password">Confirm Password</label>
+                      <input class="form-control" id="pwdConfirm" type="password" placeholder="Confirm Password" required>
+                      <label for="confirmmsg" id="confirmmsg"></label>
+                    </div>
                   </div>
                   <br>
                   <div class="text-center">
@@ -123,7 +148,80 @@
         </div>
           </footer>
       
-    
+          <script>
+           
+            let email=document.getElementById("email");
+            let emailtext=document.getElementById("emailtext");
+            let contact=document.getElementById("contact");
+            let contacttext=document.getElementById("contacttext");
+            let password=document.getElementById("password");
+            let strengthbar=document.getElementById("strengthbar");
+            let pwdConfirm=document.getElementById("pwdConfirm");
+            let confirmmsg=document.getElementById("confirmmsg");
+            email.addEventListener("input",emailValidate);
+            contact.addEventListener("input",contactValidate);
+            password.addEventListener("input",pwdValidate);
+            pwdConfirm.addEventListener("input",confirmValidate);
+            function emailValidate(){
+              let exp=/^([A-Za-z0-9\-.$_,]+)@([A-Za-z0-9\-]+).([a-z]{2,3})(.[a-z]{2,3})$/;
+              if(exp.test(email.value)){
+                  emailtext.innerHTML="Valid Email Address";
+                  emailtext.style.color="green";
+                  return true;
+              }
+              else{
+                  emailtext.innerHTML="Invalid Email Address";
+                  emailtext.style.color="red";
+                  return false;
+              }
+            }
+            function contactValidate(){
+             let exp=/^([7-9]{1})([0-9]{2})([-. ]?)([0-9]{3})([-. ]?)([0-9]{4})$/;
+            
+             if(exp.test(contact.value)){
+                  contacttext.innerHTML="Valid Contact";
+                  contacttext.style.color="green";
+                  return true;
+              }
+              else{
+                  contacttext.innerHTML="Invalid Contact";
+                  contacttext.style.color="red";
+                  return false;
+              }
+            }
+            function pwdValidate(){
+              let strongpwd=/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+              let mediumpwd=/^((?=.*[a-z])(?=.*[A-Z])(?=.{6,}))|((?=.*[A-Z])(?=.*[0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[0-9])(?=.{6,}))$/;
+              if(strongpwd.test(password.value)){
+                strengthbar.innerHTML="Strong Password";
+                strengthbar.style.backgroundColor="Green";
+                return true;
+              }
+              else if(mediumpwd.test(password.value)){
+                strengthbar.innerHTML="Medium Password";
+                strengthbar.style.backgroundColor="Orange";
+                return false;
+              }
+              else{
+                strengthbar.innerHTML="Weak Password";
+                strengthbar.style.backgroundColor="Red";
+                return false;
+              }
+            }
+            function confirmValidate(){
+                if(password.value==pwdConfirm.value){
+                  confirmmsg.innerHTML="Match Found";
+                  confirmmsg.style.color="green";
+                  return true;
+                }
+                else{
+                  confirmmsg.innerHTML="No Match Found";
+                  confirmmsg.style.color="red";
+                  return false;
+                }
+            }
+
+          </script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

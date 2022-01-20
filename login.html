@@ -22,12 +22,10 @@
             background-size: cover;
             background-color: rgba(235, 235, 235, 0.842);
         }
-        .carousel-inner{
-          height: 650px;
-        }
+      
         .Sign{
           width: 500px;
-          margin-left: 60%;
+          margin-left: 35%;
           margin-top: 5%;
           margin-bottom: 5%;
           padding: 3%;
@@ -36,7 +34,9 @@
           background-color: rgba(235, 235, 235, 0.705);
           
         }
-              
+        .label{
+          padding-bottom: 1%;
+        }              
         footer{ 
             background-color:rgba(9, 15,97, 0.822);
             color: whitesmoke;
@@ -48,7 +48,7 @@
     </style>
   </head>
 
-    <body background="images/Index/topstation.jfif"> 
+    <body background="images/Index/topstation.jfif">
       
       <!--Navbar starts here-->
       <nav class="navbar navbar-dark navbar-expand-sm sticky-top pt-4 pb-4" style=" background-color: rgba(9, 15,97, 0.822);" >
@@ -74,14 +74,22 @@
                   <legend style="text-align: center; font-family: sans-serif; font-size: 300%;">Log In</legend>
                   
                   <div>
-                      <label for="E-mail Address">E-mail address</label>
-                      <input class="form-control" type="text" placeholder="E-mail address">
+                      <label for="E-mail Address" class="label">E-mail address</label>
+                      <input class="form-control" id="email" type="text" placeholder="E-mail address" required>
+                      <label id="emailtext"></label>
                   </div>
-                  <br>
                   
                   <div>
-                      <label for="Password">Password</label>
-                      <input class="form-control" type="password" placeholder="Password">
+                      <label for="Password" class="label">Password</label>
+                      <input class="form-control" id="password" type="password" placeholder="Password" required>
+                      <label for="pwdtext" id="pwdtext" hidden>
+                        <ul style="color: green;"><i>
+                          <li id="length">Minimum 8 character</li>
+                          <li id="uppercase">Must contain an Uppercase</li>
+                          <li id="lowercase">Must contain a Lowercase</li>
+                          <li id="number">Must contain a Number</li>
+                        </i></ul>
+                      </label>
                      
                   </div>
                   <br>
@@ -107,6 +115,64 @@
             </div>
           </footer>
       
+        <script>
+          let email=document.getElementById("email");
+          let emailtext=document.getElementById("emailtext");
+          let password=document.getElementById("password");
+          let pwdtext=document.getElementById("pwdtext");
+          let number=document.getElementById("number");
+          let uppercase=document.getElementById("uppercase");
+          let lowercase=document.getElementById("lowercase");
+          let length=document.getElementById("length");
+          email.addEventListener("input",emailValidate);
+          password.addEventListener("input",pwdValidate);
+          function emailValidate(){
+              
+              let exp=/^([A-Za-z0-9\-.$_,!@#%&*?:]+)@([A-Za-z0-9\-]+).([a-z]{2,3})(.[a-z]{2,3})$/;
+              if(exp.test(email.value)){
+                  emailtext.innerHTML="Valid Email Address";
+                  emailtext.style.color="green";
+                  return true;
+              }
+              else{
+                  emailtext.innerHTML="Invalid Email Address";
+                  emailtext.style.color="red";
+                  return false;
+              }
+            }
+
+            function pwdValidate(){
+              pwdtext.removeAttribute("hidden","true");
+             if(password.value.length<8){
+               length.style.color="red";
+             }
+             else
+             {
+               length.style.color="green";
+             }
+             if(password.value.match(/[0-9]/)){
+               number.style.color="green";
+             }
+             else
+             {
+               number.style.color="red";
+             }
+             if(password.value.match(/[a-z]/)){
+               lowercase.style.color="green";
+             }
+             else
+             {
+               lowercase.style.color="red";
+             }
+             if(password.value.match(/[A-Z]/)){
+               uppercase.style.color="green";
+             }
+             else
+             {
+               uppercase.style.color="red";
+             }
+            }
+        </script>
     
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
