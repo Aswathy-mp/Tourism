@@ -69,7 +69,7 @@
 
         <!--Form starts here-->
         <div class="Sign"> 
-            <form action="">
+            <form action="index.html" onsubmit="return Validate();" >
               <fieldset class="form-group">
                   <legend style="text-align: center; font-family: sans-serif; font-size: 300%;">Log In</legend>
                   
@@ -82,14 +82,7 @@
                   <div>
                       <label for="Password" class="label">Password</label>
                       <input class="form-control" id="password" type="password" placeholder="Password" required>
-                      <label for="pwdtext" id="pwdtext" hidden>
-                        <ul style="color: green;"><i>
-                          <li id="length">Minimum 8 character</li>
-                          <li id="uppercase">Must contain an Uppercase</li>
-                          <li id="lowercase">Must contain a Lowercase</li>
-                          <li id="number">Must contain a Number</li>
-                        </i></ul>
-                      </label>
+                      <label for="pwdtext" id="pwdtext"></label>
                      
                   </div>
                   <br>
@@ -120,10 +113,6 @@
           let emailtext=document.getElementById("emailtext");
           let password=document.getElementById("password");
           let pwdtext=document.getElementById("pwdtext");
-          let number=document.getElementById("number");
-          let uppercase=document.getElementById("uppercase");
-          let lowercase=document.getElementById("lowercase");
-          let length=document.getElementById("length");
           email.addEventListener("input",emailValidate);
           password.addEventListener("input",pwdValidate);
           function emailValidate(){
@@ -131,47 +120,42 @@
               let exp=/^([A-Za-z0-9\-.$_,!@#%&*?:]+)@([A-Za-z0-9\-]+).([a-z]{2,3})(.[a-z]{2,3})$/;
               if(exp.test(email.value)){
                   emailtext.innerHTML="Valid Email Address";
-                  emailtext.style.color="green";
-                  return true;
+                  emailtext.style.color="green"; 
+                  return true  
               }
               else{
                   emailtext.innerHTML="Invalid Email Address";
-                  emailtext.style.color="red";
-                  return false;
+                  emailtext.style.color="red";  
+                  return false;  
               }
             }
 
             function pwdValidate(){
               pwdtext.removeAttribute("hidden","true");
-             if(password.value.length<8){
-               length.style.color="red";
-             }
-             else
-             {
-               length.style.color="green";
-             }
-             if(password.value.match(/[0-9]/)){
-               number.style.color="green";
-             }
-             else
-             {
-               number.style.color="red";
-             }
-             if(password.value.match(/[a-z]/)){
-               lowercase.style.color="green";
-             }
-             else
-             {
-               lowercase.style.color="red";
-             }
-             if(password.value.match(/[A-Z]/)){
-               uppercase.style.color="green";
-             }
-             else
-             {
-               uppercase.style.color="red";
-             }
+              let exp=/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+              if(exp.test(password.value)){
+                // console.log("Valid");
+                pwdtext.innerHTML="Valid Password";
+                pwdtext.style.color="Green";
+                return true;
+              }
+              else{
+                pwdtext.innerHTML="Invalid Password";
+                pwdtext.style.color="red";
+                return false;
+              }
             }
+            
+            function Validate(){
+              if(emailValidate()&&pwdValidate()){
+                return true;
+              }
+              else{
+                alert("Invalid Credentials");
+                return false;
+              }
+            }
+           
         </script>
     
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
